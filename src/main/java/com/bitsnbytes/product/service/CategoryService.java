@@ -7,6 +7,8 @@ import com.bitsnbytes.product.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class CategoryService {
@@ -21,6 +23,21 @@ public class CategoryService {
         return CategoryMapper.toCategoryDTO(category);
     }
     //get all categories
+    public List<CategoryDTO> getAllCategories() {
+        // Implementation goes here
+        return categoryRepository.findAll().stream().map(CategoryMapper::toCategoryDTO).toList();
+    }
     //get category by id
+    public CategoryDTO getCategoryById(Long id) {
+        // Implementation goes here
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        return CategoryMapper.toCategoryDTO(category);
+    }
     //delete category
+    public String deleteCategory(Long id) {
+        // Implementation goes here
+        categoryRepository.deleteById(id);
+        return "Category " + id + " deleted successfully";
+    }
 }
